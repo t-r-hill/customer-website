@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>Error</title>
+</head>
+<body>
+<div align="center">
+  <h1>Error</h1>
+  <br/><br/>
+  <ul>
+    <li th:each="error:${errors}" th:text="${error.value}">value</li>
+  </ul>
+</div>
+</body>
+</html>
