@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <title>Assign Subscription to Customer</title>
+</head>
+<body>
+<div align="center">
+  <h1>Assign Subscription to Customer</h1>
+  <br />
+  <!--
+  Here is the form that will be used to save the new customer.
+  The form is tied to the Customer object you added to the model,
+  and on submit it will hit the /save endpoint using the POST method.
+  -->
+  <p th:text="'Customer name: ' + ${customer.fullName}">Customer name</p>
+  <p th:text="'Customer email: ' + ${customer.emailAddress}">Customer email</p>
+
+  <form th:action="@{/assign-subscription}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="*{id}" th:value="${customer.id}"/>
+    <input type="hidden" th:field="*{fullName}" th:value="${customer.fullName}"/>
+    <input type="hidden" th:field="*{emailAddress}" th:value="${customer.emailAddress}"/>
+    <input type="hidden" th:field="*{address}" th:value="${customer.address}"/>
+    <input type="hidden" th:field="*{age}" th:value="${customer.age}"/>
+    <select th:field="*{subscription}">
+      <option th:if="${subscriptionList.isEmpty()}">No Subscriptions Available</option>
+      <option th:each="subscription: ${subscriptionList}" th:value="${subscription.id}" th:text="${subscription.toString()}">SubscriptionList</option>
+    </select>
+    <p colspan="2"><button type="submit" th:disabled="${subscriptionList.isEmpty()}">Save</button> </p>
+  </form>
+</div>
+</body>
+</html>

@@ -2,7 +2,9 @@ package co.LabsProjects.customerwebsite.controller;
 
 import co.LabsProjects.customerwebsite.exception.IdNotFoundException;
 import co.LabsProjects.customerwebsite.model.Customer;
+import co.LabsProjects.customerwebsite.model.Subscription;
 import co.LabsProjects.customerwebsite.service.CustomerService;
+import co.LabsProjects.customerwebsite.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    SubscriptionService subscriptionService;
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
@@ -65,6 +70,40 @@ public class CustomerController {
         }
         mav.addObject("customer", customer);
         return mav;
+    }
+
+    @GetMapping("/assign-subscription/{id}")
+    public String showAssignSubscriptionPage(@PathVariable long id, Model model) throws IdNotFoundException{
+        Customer customer = customerService.getCustomer(id);
+        if (customer == null){
+            throw new IdNotFoundException("A customer with id " + id + " does not exist");
+        } else if (customer.getSubscription() != null) {
+            throw new IdNotFoundException("Customer with id " + id + "already has a subscription assigned");
+        }
+        model.addAttribute("customer", customer);
+        // Get subscriptions which haven't been assigned and add to model
+        List<Subscription> subscriptionList = subscriptionService.getAvailableSubscriptions();
+        model.addAttribute("subscriptionList", subscriptionList);
+        return "assign-subscription";
+    }
+
+    @PostMapping("/assign-subscription")
+    public String saveAssignedSubscription(@ModelAttribute("customer") Customer customer){
+        customerService.saveCustomer(customer);
+        return "redirect:/";
+    }
+
+    @RequestMapping("/remove-subscription/{id}")
+    public String removeAssignedSubscription(@PathVariable Long id) throws IdNotFoundException{
+        Customer customer = customerService.getCustomer(id);
+        if (customer == null){
+            throw new IdNotFoundException("A customer with id " + id + " does not exist");
+        } else if (customer.getSubscription() == null){
+            throw new IdNotFoundException("Customer doesn't have a subscription assigned");
+        }
+        customer.setSubscription(null);
+        customerService.saveCustomer(customer);
+        return "redirect:/";
     }
 
     @PostMapping("/update/{id}")

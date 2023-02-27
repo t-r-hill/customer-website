@@ -8,6 +8,7 @@
 <div align="center">
   <h1>Customer List</h1>
   <a th:href="@{/new}">Add New Customer</a>
+  <a th:href="@{/subscription}">View Subscriptions</a>
   <br/><br/>
   <table border="1" cellpadding="10">
     <thead>
@@ -22,6 +23,7 @@
       <th>Email Address</th>
       <th>Age</th>
       <th>Address</th>
+      <th>Subscription</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -38,9 +40,13 @@
       <td th:text="${customer.emailAddress}">Email Address</td>
       <td th:text="${customer.age}">Age</td>
       <td th:text="${customer.address}">Address</td>
+      <td th:text="(${customer.subscription} != null) ? (${customer.subscription})">Subscription</td>
       <td>
         <a th:href="@{'/edit/' + ${customer.id}}">Edit</a>
         <a th:href="@{'/delete/' + ${customer.id}}">Delete</a>
+        <a th:href="(${customer.subscription} == null) ? (@{'/assign-subscription/' + ${customer.id}}) : (@{'remove-subscription/' + ${customer.id}})"
+           th:text="(${customer.subscription} == null) ? ('Assign') : ('Remove')">AssignRemove
+        </a>
       </td>
     </tr>
     </tbody>
