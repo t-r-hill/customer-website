@@ -23,7 +23,7 @@
     <input type="hidden" th:field="*{address}" th:value="${customer.address}"/>
     <input type="hidden" th:field="*{age}" th:value="${customer.age}"/>
     <select th:field="*{subscription}">
-      <option th:if="${subscriptionList.isEmpty()}">No Subscriptions Available</option>
+      <option th:if="${subscriptionList.isEmpty()}" th:value="null">No Subscriptions Available</option>
       <option th:each="subscription: ${subscriptionList}" th:value="${subscription.id}" th:text="${subscription.toString()}">SubscriptionList</option>
     </select>
     <p colspan="2"><button type="submit" th:disabled="${subscriptionList.isEmpty()}">Save</button> </p>

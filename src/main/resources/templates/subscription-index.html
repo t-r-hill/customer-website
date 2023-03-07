@@ -40,8 +40,8 @@
       <td th:text="'$' + ${subscription.price}">Age</td>
       <td th:text="(${subscription.customer} != null) ? (${subscription.customer.fullName})">Customer</td>
       <td>
-        <a th:href="@{'/edit/' + ${subscription.id}}">Edit</a>
-        <a th:href="@{'/delete/' + ${subscription.id}}">Delete</a>
+        <a th:href="@{'/subscription/edit/' + ${subscription.id}}">Edit</a>
+        <a th:href="@{'/subscription/delete/' + ${subscription.id}}">Delete</a>
       </td>
     </tr>
     </tbody>
