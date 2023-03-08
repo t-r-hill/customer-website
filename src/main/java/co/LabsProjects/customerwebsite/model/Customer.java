@@ -39,7 +39,7 @@ public class Customer {
     @Max(value = 999, message = "Age must be less than 999")
     private Integer age;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(
             name = "subscription_id",
             referencedColumnName = "id")

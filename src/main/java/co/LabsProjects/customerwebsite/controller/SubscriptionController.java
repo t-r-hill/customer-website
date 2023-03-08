@@ -48,7 +48,7 @@ public class SubscriptionController {
             throw new IdNotFoundException("Subscription with id - " + subscription.getId() + " - does not match id - " + id);
         }
         subscriptionService.createNewSubscription(subscription);
-        return "redirect:/subscription/";
+        return "redirect:/subscription";
     }
 
     @GetMapping("/edit/{id}")
@@ -73,7 +73,7 @@ public class SubscriptionController {
             throw new IdNotFoundException("A customer with id " + id + " does not exist");
         }
         subscriptionService.deleteSubscription(id);
-        return "redirect:/subscription/";
+        return "redirect:/subscription";
     }
 
 

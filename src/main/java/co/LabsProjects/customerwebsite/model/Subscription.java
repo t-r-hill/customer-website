@@ -39,6 +39,6 @@ public class Subscription {
 
     @Override
     public String toString(){
-        return tier + " - " + subscriptionMonths + " - $";
+        return tier + " - " + subscriptionMonths + " - $ " + price;
     }
 }

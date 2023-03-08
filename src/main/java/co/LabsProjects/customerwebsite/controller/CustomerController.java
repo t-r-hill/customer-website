@@ -3,10 +3,12 @@ package co.LabsProjects.customerwebsite.controller;
 import co.LabsProjects.customerwebsite.exception.IdNotFoundException;
 import co.LabsProjects.customerwebsite.model.Customer;
 import co.LabsProjects.customerwebsite.model.Subscription;
+import co.LabsProjects.customerwebsite.model.User;
 import co.LabsProjects.customerwebsite.service.CustomerService;
 import co.LabsProjects.customerwebsite.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/customer")
 public class CustomerController {
 
     @Autowired
@@ -30,13 +33,21 @@ public class CustomerController {
     @Autowired
     SubscriptionService subscriptionService;
 
-    @GetMapping("/")
-    public String viewHomePage(Model model) {
+    @GetMapping()
+    public String viewCustomerList(Model model) {
         // Here you call the service to retrieve all the customers
         final List<Customer> customerList = customerService.getAllCustomers();
         // Once the customers are retrieved, you can store them in model and return it to the view
         model.addAttribute("customerList", customerList);
-        return "index";
+        return "customer-index";
+    }
+
+    @GetMapping("/dashboard")
+    public String viewCustomerDashboard(Model model, Authentication authentication){
+        User user = (User) authentication.getPrincipal();
+        Customer customer = user.getCustomer();
+        model.addAttribute("customer",customer);
+        return "customer-view";
     }
 
     @GetMapping("/new")
@@ -53,7 +64,7 @@ public class CustomerController {
     // the HTML page above
     public String saveCustomer(@ModelAttribute("customer") @Valid Customer customer) {
         customerService.saveCustomer(customer);
-        return "redirect:/";
+        return "redirect:/customer";
     }
 
     @GetMapping("/edit/{id}")
@@ -90,7 +101,7 @@ public class CustomerController {
     @PostMapping("/assign-subscription")
     public String saveAssignedSubscription(@ModelAttribute("customer") Customer customer){
         customerService.saveCustomer(customer);
-        return "redirect:/";
+        return "redirect:/customer";
     }
 
     @RequestMapping("/remove-subscription/{id}")
@@ -103,7 +114,7 @@ public class CustomerController {
         }
         customer.setSubscription(null);
         customerService.saveCustomer(customer);
-        return "redirect:/";
+        return "redirect:/customer";
     }
 
     @PostMapping("/update/{id}")
@@ -114,7 +125,7 @@ public class CustomerController {
             throw new IdNotFoundException("Customer with id - " + customer.getId() + " - does not match id - " + id);
         }
         customerService.saveCustomer(customer);
-        return "redirect:/";
+        return "redirect:/customer";
     }
 
     @GetMapping("/delete/{id}")
@@ -123,7 +134,7 @@ public class CustomerController {
             throw new IdNotFoundException("A customer with id " + id + " does not exist");
         }
         customerService.deleteCustomer(id);
-        return "redirect:/";
+        return "redirect:/customer";
     }
 
     @ExceptionHandler(BindException.class)

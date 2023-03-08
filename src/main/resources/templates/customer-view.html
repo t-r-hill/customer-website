@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8"/>
+  <link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+  <title>Customer Dashboard</title>
+</head>
+<body>
+<div class="container" align="center">
+  <h1>Your Information</h1>
+  <table class="table table-hover" th:object="${customer}">
+    <tr>
+      <td>Customer Name:</td>
+      <td th:text="*{fullName}" required></td>
+    </tr>
+    <tr>
+      <td>Email Address:</td>
+      <td th:text="*{emailAddress}" ></td>
+    </tr>
+    <tr>
+      <td>Age:</td>
+      <td th:text="*{age}"></td>
+    </tr>
+    <tr>
+      <td>Address:</td>
+      <td th:text="*{address}"></td>
+    </tr>
+    <tr th:if="*{subscription != null}">
+      <td>Current Subscription:</td>
+      <td th:text="*{subscription.toString()}"> </td>
+    </tr>
+  </table>
+  <br/><br/>
+  <form method="post" th:action="@{/logout}">
+    <input type="submit" class="btn btn-danger" value="Logout"/>
+  </form>
+</div>
+</body>
+</html>

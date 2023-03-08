@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Assign Subscription to Customer</title>
+  <link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div align="center">
@@ -16,7 +17,7 @@
   <p th:text="'Customer name: ' + ${customer.fullName}">Customer name</p>
   <p th:text="'Customer email: ' + ${customer.emailAddress}">Customer email</p>
 
-  <form th:action="@{/assign-subscription}" th:object="${customer}" method="post">
+  <form th:action="@{/customer/assign-subscription}" th:object="${customer}" method="post">
     <input type="hidden" th:field="*{id}" th:value="${customer.id}"/>
     <input type="hidden" th:field="*{fullName}" th:value="${customer.fullName}"/>
     <input type="hidden" th:field="*{emailAddress}" th:value="${customer.emailAddress}"/>
@@ -26,7 +27,7 @@
       <option th:if="${subscriptionList.isEmpty()}" th:value="null">No Subscriptions Available</option>
       <option th:each="subscription: ${subscriptionList}" th:value="${subscription.id}" th:text="${subscription.toString()}">SubscriptionList</option>
     </select>
-    <p colspan="2"><button type="submit" th:disabled="${subscriptionList.isEmpty()}">Save</button> </p>
+    <p colspan="2"><button class="btn btn-primary" type="submit" th:disabled="${subscriptionList.isEmpty()}">Save</button> </p>
   </form>
 </div>
 </body>

@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Edit Customer</title>
+  <link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div align="center">
@@ -13,7 +14,7 @@
   since the Customer object fields were populated before it was added to the model, their
   values populate the fields here. Any changes to the fields then POST to the update endpoint.
   -->
-  <form action="#" th:action="@{'/update/' + ${customer.id}}" th:object="${customer}"
+  <form action="#" th:action="@{'/customer/update/' + ${customer.id}}" th:object="${customer}"
         method="post">
     <table border="0" cellpadding="10">
       <tr>
@@ -37,7 +38,7 @@
         <td><textarea type="text" th:field="*{address}" required></textarea></td>
       </tr>
       <tr>
-        <td colspan="2"><button type="submit">Save</button></td>
+        <td colspan="2"><button class="btn btn-primary" type="submit">Save</button></td>
       </tr>
     </table>
   </form>
