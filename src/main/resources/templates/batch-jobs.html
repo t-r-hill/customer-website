@@ -35,8 +35,8 @@
   <h2>New Customer Batch Upload</h2>
   <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
     <div class="mb-3">
-      <label for="csvToUpload" class="form-label">Customer Upload .csv</label>
-      <input type="file" class="form-control" id="csvToUpload" name="customerCsv" required>
+      <label for="csvUpload" class="form-label">Customer Upload .csv</label>
+      <input type="file" class="form-control" id="csvUpload" name="csvUpload" required>
     </div>
     <button type="submit" class="btn btn-primary">Upload</button>
   </form>

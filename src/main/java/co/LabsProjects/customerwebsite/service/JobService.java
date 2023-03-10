@@ -39,10 +39,20 @@ public class JobService {
         return jobExplorer.getJobExecutions(jobInstances.get(0));
     }
 
-    public void runJob(Resource resource) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException, IOException {
+//    public void runJob(Resource resource) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException, IOException {
+//        // Run batch job
+//        JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
+//        jobParametersBuilder.addString("csvUpload", resource.getURI().toString());
+//        jobParametersBuilder.addDate("now", Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+//
+//        JobExecution jobExecution;
+//        jobExecution = jobLauncher.run(job, jobParametersBuilder.toJobParameters());
+//    }
+
+    public void runJob(String csvUploadFilePath) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException, IOException {
         // Run batch job
         JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
-        jobParametersBuilder.addString("csvUpload", resource.getURI().toString());
+        jobParametersBuilder.addString("csvUpload", csvUploadFilePath);
         jobParametersBuilder.addDate("now", Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 
         JobExecution jobExecution;

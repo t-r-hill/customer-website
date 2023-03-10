@@ -39,14 +39,14 @@ public class BatchController {
     }
 
     @PostMapping("/upload")
-    public String uploadFileAndRunBatchJob(@RequestParam MultipartFile csvUpload) throws IOException, JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+    public String uploadFileAndRunBatchJob(@RequestParam("csvUpload") MultipartFile csvUpload) throws IOException, JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         //Save multipartFile file in a temporary physical folder
-//        String path = new ClassPathResource("tmpuploads/").getURL().getPath();
-//        File fileToImport = new File(path + csvUpload.getOriginalFilename());
+        String path = new ClassPathResource("tmpuploads/").getURL().getPath();
+        File fileToImport = new File(path + csvUpload.getOriginalFilename());
 
-        Resource resource = new InputStreamResource(csvUpload.getInputStream());
+//        Resource resource = new InputStreamResource(csvUpload.getInputStream());
 
-        jobService.runJob(resource);
+        jobService.runJob(fileToImport.getAbsolutePath());
         return "redirect:/upload";
     }
 

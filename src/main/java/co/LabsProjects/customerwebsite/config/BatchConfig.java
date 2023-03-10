@@ -56,12 +56,25 @@ public class BatchConfig {
                 .build();
     }
 
+//    @Bean
+//    @StepScope
+//    public FlatFileItemReader<Customer> customerCsvReader(@Value("#{jobParameters[csvUpload]}") Resource resource) throws IOException {
+//        return new FlatFileItemReaderBuilder<Customer>()
+//                .name("customer-csv-reader")
+//                .resource(resource)
+//                .delimited()
+//                .names("first_name", "last_name","email", "address", "age")
+//                .linesToSkip(1)
+//                .fieldSetMapper(new CustomerFieldSetMapper())
+//                .build();
+//    }
+
     @Bean
     @StepScope
-    public FlatFileItemReader<Customer> customerCsvReader(@Value("#{jobParameters[csvUpload]}") Resource resource) throws IOException {
+    public FlatFileItemReader<Customer> customerCsvReader(@Value("#{jobParameters[csvUpload]}") String csvUpload) throws IOException {
         return new FlatFileItemReaderBuilder<Customer>()
                 .name("customer-csv-reader")
-                .resource(resource)
+                .resource(new FileSystemResource(csvUpload))
                 .delimited()
                 .names("first_name", "last_name","email", "address", "age")
                 .linesToSkip(1)
