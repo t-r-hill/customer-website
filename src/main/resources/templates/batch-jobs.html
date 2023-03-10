@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>Customer Batch Upload</title>
+  <link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container" align="center">
+  <h1>Customer Batch Upload</h1>
+  <a class="btn btn-primary" th:href="@{/}">Back Home</a>
+  <br/><br/>
+  <h2>Previous Batch Uploads</h2>
+  <table th:if="${!jobExecutions.isEmpty()}" class="table table-hover">
+    <thead>
+    <tr>
+      <th>Job Execution Id</th>
+      <th>Job Id</th>
+      <th>Job Configuration Name</th>
+      <th>Job Created Time</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="jobExecution : ${jobExecutions}">
+      <td th:text="${jobExecution.id}">Customer ID</td>
+      <td th:text="${jobExecution.jobId}">Full Name</td>
+      <td th:text="${jobExecution.jobConfigurationName}">Email Address</td>
+      <td th:text="${jobExecution.createTime}">Age</td>
+      <td th:text="${jobExecution.status}">Address</td>
+    </tr>
+    </tbody>
+  </table>
+  <br/><br/>
+  <h2>New Customer Batch Upload</h2>
+  <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="csvToUpload" class="form-label">Customer Upload .csv</label>
+      <input type="file" class="form-control" id="csvToUpload" name="customerCsv" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+</div>
+</body>
+</html>

@@ -10,15 +10,11 @@
   <h1>Customer List</h1>
   <a class="btn btn-primary" th:href="@{/customer/new}">Add New Customer</a>
   <a class="btn btn-primary" th:href="@{/subscription}">View Subscriptions</a>
+  <a class="btn btn-primary" th:href="@{/upload}">Customer Batch Upload</a>
   <br/><br/>
   <table class="table table-hover">
     <thead>
     <tr>
-      <!--
-      You are creating a table here, where the header will be the Customer
-      details and then the other rows will be filled by the data that
-      you send back in the Model object.
-      -->
       <th>Customer ID</th>
       <th>Full Name</th>
       <th>Email Address</th>
@@ -28,12 +24,6 @@
       <th>Actions</th>
     </tr>
     </thead>
-    <!--
-     Now that your headers are defined, you can reference the key-value
-     pair "customerList" that you added to the model above.
-     Thymeleaf will loop over each customer and extract the attributes to match
-     your column names.
-    -->
     <tbody>
     <tr th:each="customer : ${customerList}">
       <td th:text="${customer.id}">Customer ID</td>

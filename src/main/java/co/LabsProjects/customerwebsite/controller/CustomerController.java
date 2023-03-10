@@ -137,6 +137,7 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
+
     @ExceptionHandler(BindException.class)
     public String handleBindException(BindException ex, Model model) {
         List<String> errors = new ArrayList();
