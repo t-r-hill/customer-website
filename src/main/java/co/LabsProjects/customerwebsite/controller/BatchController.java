@@ -43,6 +43,7 @@ public class BatchController {
         //Save multipartFile file in a temporary physical folder
         String path = new ClassPathResource("tmpuploads/").getURL().getPath();
         File fileToImport = new File(path + csvUpload.getOriginalFilename());
+        csvUpload.transferTo(fileToImport);
 
 //        Resource resource = new InputStreamResource(csvUpload.getInputStream());
 
