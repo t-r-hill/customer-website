@@ -1,22 +1,16 @@
 package co.LabsProjects.customerwebsite.controller;
 
-import co.LabsProjects.customerwebsite.exception.IdNotFoundException;
-import co.LabsProjects.customerwebsite.service.JobService;
+import co.LabsProjects.customerwebsite.service.BatchService;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionException;
-import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,12 +22,12 @@ import java.util.*;
 public class BatchController {
 
     @Autowired
-    JobService jobService;
+    BatchService batchService;
 
 
     @GetMapping("/upload")
     public String showCustomerUploadPage(Model model) {
-        List<JobExecution> jobExecutions = jobService.getAllJobExecutions();
+        List<JobExecution> jobExecutions = batchService.getAllJobExecutions();
         model.addAttribute("jobExecutions", jobExecutions);
         return "batch-jobs";
     }
@@ -47,7 +41,7 @@ public class BatchController {
 
 //        Resource resource = new InputStreamResource(csvUpload.getInputStream());
 
-        jobService.runJob(fileToImport.getAbsolutePath());
+        batchService.runJob(fileToImport.getAbsolutePath());
         return "redirect:/upload";
     }
 

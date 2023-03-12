@@ -5,22 +5,21 @@ import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class JobService {
+public class BatchService {
 
     @Autowired
     JobExplorer jobExplorer;
@@ -36,7 +35,10 @@ public class JobService {
         if (jobInstances.isEmpty()){
             return new ArrayList<JobExecution>();
         }
-        return jobExplorer.getJobExecutions(jobInstances.get(0));
+        List<JobExecution> allExecutions = jobInstances.stream()
+                .map(jobInstance -> jobExplorer.getJobExecutions(jobInstance))
+                .flatMap(List::stream).collect(Collectors.toList());
+        return allExecutions;
     }
 
 //    public void runJob(Resource resource) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException, IOException {
