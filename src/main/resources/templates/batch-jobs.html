@@ -25,7 +25,7 @@
     <tr th:each="jobExecution : ${jobExecutions}">
       <td th:text="${jobExecution.id}">Customer ID</td>
       <td th:text="${jobExecution.jobId}">Full Name</td>
-      <td th:text="${jobExecution.jobConfigurationName}">Email Address</td>
+      <td th:text="${jobExecution.jobInstance.jobName}">Email Address</td>
       <td th:text="${jobExecution.createTime}">Age</td>
       <td th:text="${jobExecution.status}">Address</td>
     </tr>
